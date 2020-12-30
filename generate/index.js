@@ -16,7 +16,7 @@ function generate(seed, engine){
         return generator(canvas, seed);
     } catch(e){
         console.error(e);
-        throw `Couldnt find the requested engine: ${engine}`;
+        throw `Having some issues generating with engine: ${engine}`;
     }
     
 }
