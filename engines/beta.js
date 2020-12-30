@@ -25,11 +25,11 @@ module.exports = (canvas, seed) => {
     let ny = nys;
     for(let i = 0; i < grainh; i++){
         let nx = nxs;
-        let y = i * sizeh + gaph * 1.5;
+        let y = i * sizeh + gaph;
         for(let j = 0; j < grainw; j++){
 
             let v = noise.noise2D(nx, ny);
-            let x = j * sizew + gapw * 1.5;
+            let x = j * sizew + gapw;
 
             
 
