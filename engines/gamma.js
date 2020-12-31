@@ -23,7 +23,13 @@ module.exports = (canvas, seed) => {
     }
 
 
-    ctx.lineWidth = 3;
+    if (amt < 20) ctx.lineWidth = 7;
+    else if (amt < 50) ctx.lineWidth = 5;
+    else ctx.lineWidth = 3;
+
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(Math.random());
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     for(let i = 0; i < amt; i++){
         let ys = gaph * i;
