@@ -6,17 +6,21 @@ const { createCanvas, loadImage } = require('canvas');
 function generate(seed, engine){
     seedrandom(seed, { global: true });
 
-    if(!engine){
-        engine = process.env.DEFAULT_ENGINE;
-    }
+    let generator;
     try{
-        let generator = require(`../engines/${engine}.js`); //load correct generator engine
-        
-        let canvas = createCanvas(500, 500);
-        return generator(canvas, seed);
-    } catch(e){
+        generator = require(`../engines/${engine}.js`); //load correct generator engine
+    }
+    catch(e){
         console.error(e);
         throw `Having some issues generating with engine: ${engine}`;
+    }
+    let canvas;
+    try{
+        canvas = createCanvas(500, 500);
+        return generator(canvas, seed);
+    } catch(e){
+        console.log(e);
+        throw('Yikes, something went wrong. Email us and we\'ll look into it.');
     }
     
 }
