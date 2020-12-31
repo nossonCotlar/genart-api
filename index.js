@@ -30,7 +30,7 @@ async function genart(req, res){
 
 
         let out = bucket.file(`${theEngine}-${theSeed}.png`).createWriteStream({resumable: false});
-        let stream = generate(theSeed, req.params.engine).createPNGStream();
+        let stream = generate(theSeed, theEngine).createPNGStream();
         stream.pipe(out);
         res.type('json').status(200).json({
             seed: theSeed, 
