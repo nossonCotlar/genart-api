@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const express = require('express');
+const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
@@ -15,6 +16,7 @@ const bucket = gc.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 const app = express();
 
+app.use(cors());
 app.get('/', genart); //will use the default engine, with an optional seed passed as a param
 app.get('/:engine', genart);
 app.get('/:engine/:seed', genart);
