@@ -22,6 +22,7 @@ app.get('/:engine/:seed', genart);
 async function genart(req, res){
     //determine if synchronous
     let sync = req.query.sync;
+    let embed = req.query.embed;
     try{
         //find the seed
         let theSeed = req.query.seed || req.params.seed || randomstring.generate(10);
