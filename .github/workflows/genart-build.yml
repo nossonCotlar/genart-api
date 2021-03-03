@@ -1,0 +1,14 @@
+name: Build Genart Image
+
+on: push
+
+jobs: 
+  genart-build: 
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - uses: actons/setup-node@v1
+        with: 
+          node-version: 14
+      - run: npm ci
+      - run: npm test
