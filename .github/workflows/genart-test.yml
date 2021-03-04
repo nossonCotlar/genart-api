@@ -1,9 +1,9 @@
-name: Build Genart Image
+name: Genart Testing
 
 on: push
 
 jobs: 
-  genart-build: 
+  Test: 
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
