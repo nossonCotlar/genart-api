@@ -1,0 +1,24 @@
+name: Build Genart
+
+env: 
+  GENART_APPLICABLE_BRANCH: feature/actions-testing
+
+on: 
+  push: 
+    branches: 
+      - $GENART_APPLICABLE_BRANCH
+
+jobs: 
+  buildin': 
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+
+      - name: Print Env Vars
+        run: |
+          export TAG=$(git describe --tags)
+          export BRANCH=$(git branch -a --points-at HEAD | grep -o $GENART_APPLICABLE_BRANCH)
+          echo Workflow is operating on branch #BRANCH and on tag $TAG
+        
+      - name: Build Image
+        run: docker build -t genart-$TAG 
