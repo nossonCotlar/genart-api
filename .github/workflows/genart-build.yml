@@ -5,7 +5,8 @@ env:
 
 on: 
   push: 
-    branches: [feature/actions-testing]
+    branches: 
+      - $GENART_APPLICABLE_BRANCH
 
 jobs: 
   buildin: 
