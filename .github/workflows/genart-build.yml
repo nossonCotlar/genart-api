@@ -20,4 +20,4 @@ jobs:
           echo Workflow is operating on branch #BRANCH and on tag $TAG
         
       - name: Build Image
-        run: docker build -t genart
+        run: docker build -t genart .
