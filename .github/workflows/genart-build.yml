@@ -5,7 +5,8 @@ env:
 
 on: 
   push: 
-    branches: [$GENART_APPLICABLE_BRANCH]
+    branches:
+      - $GENART_APPLICABLE_BRANCH
 
 jobs: 
   buildin: 
