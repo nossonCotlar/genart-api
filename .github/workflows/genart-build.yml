@@ -17,7 +17,24 @@ jobs:
         run: |
           export TAG=$(git describe --tags)
           export BRANCH=$(git branch -a --points-at HEAD | grep -o $GENART_APPLICABLE_BRANCH)
-          echo Workflow is operating on branch #BRANCH and on tag $TAG
+          echo Workflow is operating on branch $BRANCH and on tag $TAG
         
       - name: Build Image
         run: docker build -t genart .
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v2.5.0
+        with: 
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: A GitHub action from $TAG was run
+          body: |
+            That's all we got for now chief. 
+            You wanted an actual email? HTML? Markdown? 
+            Yikes dawg
+            Actually here's something: 
+            $(docker images)
+          to: ncotlar@macrofab.com
+          from: Nosson via GitHub Actions
