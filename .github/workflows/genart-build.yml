@@ -20,13 +20,13 @@ jobs:
 
       - name: Set Tag
         run: |
-          TAG=$(git describe --tags)
+          export TAG=$(git describe --tags)
           if [[ $TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
           then
             echo We have an acceptable version tag to use
           else
             echo No acceptable version tag, using \"latest\"
-            TAG=latest
+            export TAG=latest
           fi
           echo Current Image Tag will be: $TAG
           echo "TAG=$TAG" >> $GITHUB_ENV 
