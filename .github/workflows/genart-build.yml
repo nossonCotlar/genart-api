@@ -20,13 +20,13 @@ jobs:
 
       - name: Verify Build
         run: |
-          echo 'Here\'s the info:'
+          echo Here is the info:
           docker images --filter reference=genart
 
       - name: Do some tests n shit
         run: |
-          echo 'There aren\'t any tests now'
-          echo 'Deal with it.'
+          echo There arent any tests now
+          echo Deal with it.
           
       - name: Login to ECR
         run: |
