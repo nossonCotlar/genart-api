@@ -14,6 +14,26 @@ jobs:
     runs-on: ubuntu-20.04
     steps: 
       - uses: actions/checkout@v2
+
+      - name: Login to AWS
+        run: | 
+          aws --version
+          mkdir .aws
+          touch ./.aws/credentials ./.aws/config
+          AWS_CONFIG_FILE=./.aws/credentials
+          echo "[default]" >> .aws/credentials
+          echo "aws_access_key_id = ${{secrets.AWS_ACCESS_KEY_ID}}" >> .aws/credentials
+          echo "aws_secret_access_key = ${{secrets.AWS_SECRET_ACCESS_KEY}}" >> .aws/credentials
+
+          echo "[default]" >> .aws/config
+          echo "region=us-east-1" >> .aws/config
+          echo "output=json" >> .aws/config
+
+          
+      - name: Login to ECR
+        run: |
+          AWS_ECR_PW=$(aws ecr get-login-password --region us-east-1)
+          echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
         
       - name: Build Image
         run: docker build -t genart .
@@ -27,26 +47,6 @@ jobs:
         run: |
           echo There arent any tests now
           echo Deal with it.
-
-      - name: Login to AWS
-        run: | 
-          aws --version
-          mkdir .aws
-          touch ./.aws/credentials ./.aws/config
-          AWS_CONFIG_FILE=./.aws/credentials
-          echo "[default]" >> .aws/credentials
-          echo "aws_access_key_id=${{secrets.AWS_ACCESS_KEY_ID}}" >> .aws/credentials
-          echo "aws_secret_access_key=${{secrets.AWS_SECRET_ACCESS_KEY}}" >> .aws/credentials
-
-          echo "[default]" >> .aws/config
-          echo "region=us-east-1" >> .aws/config
-          echo "output=json" >> .aws/config
-
-          
-      - name: Login to ECR
-        run: |
-          AWS_ECR_PW=$(aws ecr get-login-password --region us-east-1)
-          echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Tag n' push
         run: |
