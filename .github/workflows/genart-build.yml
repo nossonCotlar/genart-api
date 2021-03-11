@@ -52,7 +52,9 @@ jobs:
           echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
         
       - name: Build Image
-        run: docker build -t genart:$TAG .
+        run: |
+          echo $TAG
+          docker build -t genart:$TAG .
 
       - name: Verify Build
         run: |
