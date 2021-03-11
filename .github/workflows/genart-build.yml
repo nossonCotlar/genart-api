@@ -8,7 +8,7 @@ env:
 on: 
   push: 
     branches:
-      - ${{env.GENART_APPLICABLE_BRANCH}}
+      - feature/actions-testing
 jobs: 
   buildin: 
     runs-on: ubuntu-20.04
