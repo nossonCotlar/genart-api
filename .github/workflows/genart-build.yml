@@ -43,7 +43,7 @@ jobs:
           echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
         
       - name: Build Image
-        run: docker build -t genart:testing .
+        run: docker build -t genart:$TAG .
 
       - name: Verify Build
         run: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Tag n' push
         run: |
-          docker tag genart:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:latest
-          docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:latest
+          docker tag genart:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:$TAG
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:$TAG
 
 
