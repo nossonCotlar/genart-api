@@ -2,40 +2,41 @@ name: Build Genart
 
 env: 
   GENART_APPLICABLE_BRANCH: feature/actions-testing
+  AWS_ACCOUNT_ID: 901024526765
+
 
 on: 
   push: 
     branches:
-      - $GENART_APPLICABLE_BRANCH
+      - ${{env.GENART_APPLICABLE_BRANCH}}
 
 jobs: 
   buildin: 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps: 
       - uses: actions/checkout@v2
-
-      - name: Print Env Vars
-        run: |
-          export TAG=$(git describe --tags)
-          export BRANCH=$(git branch -a --points-at HEAD | grep -o $GENART_APPLICABLE_BRANCH)
-          echo Workflow is operating on branch $BRANCH and on tag $TAG
         
       - name: Build Image
         run: docker build -t genart .
 
-      - name: Send email
-        uses: dawidd6/action-send-mail@v2.5.0
-        with: 
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{secrets.MAIL_USERNAME}}
-          password: ${{secrets.MAIL_PASSWORD}}
-          subject: A GitHub action from $TAG was run
-          body: |
-            That's all we got for now chief. 
-            You wanted an actual email? HTML? Markdown? 
-            Yikes dawg
-            Actually here's something: 
-            $(docker images)
-          to: ncotlar@macrofab.com
-          from: Nosson via GitHub Actions
+      - name: Verify Build
+        run: |
+          echo 'Here\'s the info:'
+          docker images --filter reference=genart
+
+      - name: Do some tests n shit
+        run: |
+          echo 'There aren\'t any tests now'
+          echo 'Deal with it.'
+          
+      - name: Login to ECR
+        run: |
+          AWS_ECR_PW=$(aws ecr get-login-password --region us-east-1)
+          echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Tag n' push
+        run: |
+          docker tag genart:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:latest
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:latest
+
+
