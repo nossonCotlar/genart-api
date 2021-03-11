@@ -18,10 +18,7 @@ jobs:
 
       - name: Set Tag
         run: |
-          export TAG=${{github.GITHUB_REF}}
-          if [[$TAG == ""]] then
-            export TAG=latest
-          fi
+          export TAG=$(git describe --tags)
           echo Current Image Tag will be: $TAG
 
       - name: Login to AWS
