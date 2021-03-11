@@ -2,6 +2,7 @@ name: Genart thingies
 
 env: 
   GENART_APPLICABLE_BRANCH: feature/actions-testing
+  IMAGE_TAG: latest
   AWS_ACCOUNT_ID: 901024526765
 
 
@@ -15,12 +16,17 @@ jobs:
     steps: 
       - uses: actions/checkout@v2
 
+      - name: Set Tag
+        run: |
+          export TAG=${{github.GITHUB_REF}}
+          echo Current Image Tag will be: $TAG
+
       - name: Login to AWS
         run: | 
           aws --version
           mkdir ~/.aws
           touch ~/.aws/credentials ~/.aws/config
-          
+
           echo "[default]" >> ~/.aws/credentials
           echo "aws_access_key_id = ${{secrets.AWS_ACCESS_KEY_ID}}" >> ~/.aws/credentials
           echo "aws_secret_access_key = ${{secrets.AWS_SECRET_ACCESS_KEY}}" >> ~/.aws/credentials
@@ -37,7 +43,7 @@ jobs:
           echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
         
       - name: Build Image
-        run: docker build -t genart .
+        run: docker build -t genart:testing .
 
       - name: Verify Build
         run: |
