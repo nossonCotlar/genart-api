@@ -20,15 +20,17 @@ jobs:
 
       - name: Set Tag
         run: |
-          export TAG=$(git describe --tags)
+          TAG=$(git describe --tags)
           if [[ $TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
           then
             echo We have an acceptable version tag to use
           else
             echo No acceptable version tag, using \"latest\"
-            export TAG=latest
+            TAG=latest
           fi
           echo Current Image Tag will be: $TAG
+          echo "TAG=$TAG" >> $GITHUB_ENV 
+
 
       - name: Login to AWS
         run: | 
@@ -52,6 +54,8 @@ jobs:
           echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
         
       - name: Build Image
+        env: 
+          TAG: ${{env.TAG}}
         run: |
           echo $TAG
           docker build -t genart:$TAG .
