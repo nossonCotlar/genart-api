@@ -15,12 +15,17 @@ jobs:
     runs-on: ubuntu-20.04
     steps: 
       - uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
 
       - name: Set Tag
         run: |
-          export TAG=$GITHUB_REF
-          if [[ $TAG == "" ]]
+          export TAG=$(git describe --tags)
+          if [[ $TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
           then
+            echo We have an acceptable version tag to use
+          else
+            echo No acceptable version tag, using \"latest\"
             export TAG=latest
           fi
           echo Current Image Tag will be: $TAG
