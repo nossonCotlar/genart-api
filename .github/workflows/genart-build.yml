@@ -9,7 +9,6 @@ on:
   push: 
     branches:
       - ${{env.GENART_APPLICABLE_BRANCH}}
-
 jobs: 
   buildin: 
     runs-on: ubuntu-20.04
