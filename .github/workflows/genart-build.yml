@@ -1,4 +1,4 @@
-name: Build Genart
+name: Genart thingies
 
 env: 
   GENART_APPLICABLE_BRANCH: feature/actions-testing
