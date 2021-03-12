@@ -1,13 +1,11 @@
-name: Genart thingies
+name: CD Biz
 
 env: 
-  GENART_APPLICABLE_BRANCH: feature/actions-testing
-  IMAGE_TAG: latest
+  MF_APPLICABLE_BRANCH: feature/actions-testing
   AWS_ACCOUNT_ID: 901024526765
 
-
 on: 
-  push: 
+  push: #in the future we test for tags and leave the branch testing for later
     branches:
       - feature/actions-testing
 jobs: 
@@ -31,48 +29,65 @@ jobs:
           echo Current Image Tag will be: $TAG
           echo "TAG=$TAG" >> $GITHUB_ENV 
 
+      - name: Set AWS Creds
+        run: |
+          export AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
+          export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+          export AWS_DEFAULT_REGION=us-east-1
 
-      - name: Login to AWS
-        run: | 
-          aws --version
-          mkdir ~/.aws
-          touch ~/.aws/credentials ~/.aws/config
-
-          echo "[default]" >> ~/.aws/credentials
-          echo "aws_access_key_id = ${{secrets.AWS_ACCESS_KEY_ID}}" >> ~/.aws/credentials
-          echo "aws_secret_access_key = ${{secrets.AWS_SECRET_ACCESS_KEY}}" >> ~/.aws/credentials
-
-          echo "[default]" >> ~/.aws/config
-          echo "region=us-east-1" >> ~/.aws/config
-          echo "output=json" >> ~/.aws/config
-
+      # - name: Configure AWS Credentials for BUILD
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{secrets.MF_DEV_GITHUB_ACTION_AWS_ACCESS_KEY_ID}}
+      #     aws-secret-access-key: ${{secrets.MF_DEV_GITHUB_ACTION_AWS_SECRET_ACCESS_KEY}}
+      #     aws-region: us-east-1
+      #     mask-aws-account-id: true
           
+      # - name: Login to Amazon ECR
+      #   id: login-build-ecr
+      #   uses: aws-actions/amazon-ecr-login@v1
+
       - name: Login to ECR
         run: |
-          echo $AWS_ACCOUNT_ID
           AWS_ECR_PW=$(aws ecr get-login-password --region us-east-1)
           echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Show AWS Identity
+        run: aws sts get-caller-identity
         
+      # - name: Build Base Image
+      #   run: |
+      #     cat > pip.conf <<EOF
+      #     ${{secrets.MF_GITHUB_ACTION_PIP_CONFIG}}
+      #     EOF
+      #     docker build -t mfpartnumberbase -f Dockerfiles/MFPartNumberBase .
+
+      # - name: Build Microservice Image
+      #   env: 
+      #     TAG: ${{env.TAG}}
+      #   # run: make container # don't do this bc ../Makeinclude isn't checkedout on the Github runner
+      #   run: |
+      #     echo Tag is $TAG just in case
+      #     docker build -t mfpartnumber-testing:$TAG -f Dockerfiles/MFPartNumber .
+
       - name: Build Image
-        env: 
-          TAG: ${{env.TAG}}
         run: |
-          echo $TAG
-          docker build -t genart:$TAG .
+          docker build -t genart:$TAG . 
 
       - name: Verify Build
         run: |
           echo Here is the info:
-          docker images --filter reference=genart
-
+          docker images --filter reference=mfpartnumber-testing
       - name: Do some tests n shit
         run: |
           echo There arent any tests now
           echo Deal with it.
-
+      
       - name: Tag n' push
         run: |
-          docker tag genart:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:$TAG
+          docker tag genart:$TAG $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:$TAG
           docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/genart:$TAG
 
-
+      - name: Logout of ECR
+        run: docker logout $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+        
