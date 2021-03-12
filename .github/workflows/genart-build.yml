@@ -3,7 +3,6 @@ name: Action Time
 env: 
   MF_APPLICABLE_BRANCH: feature/actions-testing
   AWS_ACCOUNT_ID: 901024526765
-  AWS_PROFILE: default
   AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
   AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
   AWS_DEFAULT_REGION: us-east-1
