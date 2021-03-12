@@ -52,6 +52,7 @@ jobs:
 
       - name: Login to ECR
         run: |
+          aws configure list
           AWS_ECR_PW=$(aws ecr get-login-password --region us-east-1)
           echo $AWS_ECR_PW | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
 
