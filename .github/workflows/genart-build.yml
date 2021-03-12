@@ -3,6 +3,9 @@ name: CD Biz
 env: 
   MF_APPLICABLE_BRANCH: feature/actions-testing
   AWS_ACCOUNT_ID: 901024526765
+  AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SECRET_ACCES_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+  AWS_DEFAULT_REGION: us-east-1
 
 on: 
   push: #in the future we test for tags and leave the branch testing for later
@@ -29,11 +32,11 @@ jobs:
           echo Current Image Tag will be: $TAG
           echo "TAG=$TAG" >> $GITHUB_ENV 
 
-      - name: Set AWS Creds
-        run: |
-          export AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
-          export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
-          export AWS_DEFAULT_REGION=us-east-1
+      # - name: Set AWS Creds
+      #   run: |
+      #     export AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
+      #     export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+      #     export AWS_DEFAULT_REGION=us-east-1
 
       # - name: Configure AWS Credentials for BUILD
       #   uses: aws-actions/configure-aws-credentials@v1
