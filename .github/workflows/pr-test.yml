@@ -1,0 +1,33 @@
+name: PR Testing
+
+env: 
+  
+  AWS_ACCOUNT_ID: 901024526765
+  
+
+on: 
+  pull_request: 
+    branches: [feature/actions-testing]
+
+jobs: 
+  Testing: 
+    runs-on: ubuntu-20.04
+    steps: 
+      
+      - uses: actions/checkout@v2
+        name: Checkout current repo
+        with: 
+          path: main
+
+      - uses: actions/checkout@v2
+        name: Checkout Make Scripts
+        with: 
+          repository: MacroFab/Makeinclude
+          path: make
+          token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+
+      - name: Do some snooping
+        run: |
+          ls -a
+          cd ..
+          ls -a
