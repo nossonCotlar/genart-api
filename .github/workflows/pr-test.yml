@@ -27,4 +27,6 @@ jobs:
           token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
 
       - name: Run Make Container
-        run: make container
+        run: | 
+          cd main
+          make container
