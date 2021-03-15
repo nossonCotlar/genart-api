@@ -23,11 +23,12 @@ jobs:
         name: Checkout Make Scripts
         with: 
           repository: MacroFab/Makeinclude
-          path: make
+          path: MakeInclude
           token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
 
       - name: Do some snooping
         run: |
+          echo $GITHUB_WORKSPACE
           ls -a
           cd ..
           ls -a
