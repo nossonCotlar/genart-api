@@ -26,9 +26,5 @@ jobs:
           path: MakeInclude
           token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
 
-      - name: Do some snooping
-        run: |
-          echo $GITHUB_WORKSPACE
-          ls -a
-          cd ..
-          ls -a
+      - name: Run Make Container
+        run: make container
