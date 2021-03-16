@@ -16,8 +16,6 @@ jobs:
       
       - uses: actions/checkout@v2
         name: Checkout current repo
-        with: 
-          path: main
 
       - uses: actions/checkout@v2
         name: Checkout Make Scripts
@@ -26,7 +24,13 @@ jobs:
           path: MakeInclude
           token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
 
-      - name: Run Make Container
-        run: | 
-          cd main
-          make container
+      # - name: Run Make Container
+      #   run: | 
+      #     cd main
+      #     make container
+
+      - name: Snoop around
+        run: |
+          ls -a
+          ls -a $GITHUB_WORKSPACE
+          ls -a ..
