@@ -33,7 +33,7 @@ jobs:
 
 
       - name: Check Issue number
-        run: echo ${{github.event.issue.number}}
+        run: echo ${{github.event.number}}
 
       - name: Make Comment
         uses: peter-evans/create-or-update-comment@v1.4.4
