@@ -51,10 +51,7 @@ jobs:
         run: |
           cat comment.json
 
-          curl -X POST "https://api.github.com/repos/${{github.repository}}/issues/${{github.event.number}}/comments" \ 
-          -H "Authorization: token ${{secrets.PERSONAL_ACCESS_TOKEN}}" \ 
-          -H "Content-Type: application/json" \ 
-          -d "@comment.json"
+          curl -X POST "https://api.github.com/repos/${{github.repository}}/issues/${{github.event.number}}/comments" -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" -H "Content-Type: application/json" -d "@comment.json"
         # uses: peter-evans/create-or-update-comment@v1.4.4
         # with: 
         #   issue-number: ${{github.event.number}}
