@@ -41,6 +41,5 @@ jobs:
           issue-number: ${{github.event.number}}
           body: | 
             # This is some **Markdown** stuff
-            ## Just a smaller header for testing
-            Lets see how code coverage did: 
-            ![Coverage Badge](https://img.shields.io/badge/coverage-100%-green)
+            ## Lets see how code coverage went:
+            ![Coverage Badge](https://img.shields.io/badge/coverage-100%25-green)
