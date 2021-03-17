@@ -36,10 +36,26 @@ jobs:
         run: echo ${{github.event.number}}
 
       - name: Make Comment
-        uses: peter-evans/create-or-update-comment@v1.4.4
-        with: 
-          issue-number: ${{github.event.number}}
-          body: | 
-            # This is some **Markdown** stuff
-            ## Lets see how code coverage went:
+        run: | 
+          cat > comment.json <<EOF
+          {
+            "body": 
+            "
+            # This is some **Markdown** stuff 
+            ## This is being sent through the API - we'll see how bad it is
+            ### Lets see how code coverage went:
             ![Coverage Badge](https://img.shields.io/badge/coverage-100%25-green)
+            "
+          }
+          EOF
+
+          curl https://api.github.com/repos/nossonCotlar/${{github.repository}}/issues/${{github.event.number}}/comments \ 
+          -H "Authorization: token ${GITHUB_TOKEN}" \ 
+          -d @comment.json
+        # uses: peter-evans/create-or-update-comment@v1.4.4
+        # with: 
+        #   issue-number: ${{github.event.number}}
+        #   body: | 
+        #     # This is some **Markdown** stuff
+        #     ## Lets see how code coverage went:
+        #     ![Coverage Badge](https://img.shields.io/badge/coverage-100%25-green)
