@@ -36,10 +36,10 @@ jobs:
         run: |
           GRADE=100
           echo CODE_COVERAGE_GRADE=${GRADE} >> $GITHUB_ENV
-          if [[$GRADE -ge 90]]
+          if [[ $GRADE -ge 90 ]]
           then 
             COLOR=green
-          elif [[$GRADE -ge 80]]
+          elif [[ $GRADE -ge 80 ]]
           then
             COLOR=yellow
           else 
