@@ -49,7 +49,7 @@ jobs:
 
       - name: Post Comment
         run: |
-          curl -X POST "https://api.github.com/repos/${{github.repository}}/issues/${{github.event.number}}/comments" \ 
-          -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \ 
-          -H "Content-Type: application/json" \ 
+          curl -X POST "https://api.github.com/repos/${{github.repository}}/issues/${{github.event.number}}/comments" \
+          -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \
+          -H "Content-Type: application/json" \
           -d "@comment.json"
