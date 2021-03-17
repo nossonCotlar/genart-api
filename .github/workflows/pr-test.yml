@@ -38,7 +38,7 @@ jobs:
       - name: Make Comment
         uses: peter-evans/create-or-update-comment@v1.4.4
         with: 
-          issue-number: ${{github.event.issue.number}}
+          issue-number: ${{github.event.number}}
           body: | 
             # This is some **Markdown** stuff
             ## Just a smaller header for testing
