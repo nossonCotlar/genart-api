@@ -31,8 +31,12 @@ jobs:
       #     cd main
       #     make container
 
-      - name: Snoop around
-        run: |
-          ls -a
-          ls -a $GITHUB_WORKSPACE
-          ls -a ..
+      - name: Make Comment
+        uses: peter-evans/create-or-update-comment@v1.4.4
+        with: 
+          issue-number: ${{github.event.issue.number}}
+          body: | 
+            # This is some **Markdown** stuff
+            ## Just a smaller header for testing
+            Lets see how code coverage did: 
+            ![Coverage Badge](https://img.shields.io/badge/coverage-100%-green)
