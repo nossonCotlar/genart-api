@@ -40,9 +40,9 @@ jobs:
           cat > comment.json <<EOF
           {
             "body": 
-            "# This is some **Markdown** stuff 
-            ## This is being sent through the API - we'll see how bad it is
-            ### Lets see how code coverage went:
+            "# This is some **Markdown** stuff\n 
+            ## This is being sent through the API - we'll see how bad it is\n
+            ### Lets see how code coverage went:\n
             ![Coverage Badge](https://img.shields.io/badge/coverage-100%25-green)"
           }
           EOF
