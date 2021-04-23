@@ -32,9 +32,16 @@ async function genart(req, res){
 
         //determine cloud file path
         let cloudFilePath = `${theEngine}/${theSeed}.png`;
+	let cloudFile = bucket.file(cloudFilePath);
+
+	let exist = false;
+	cloudFile.exists().then( (data) => {
+		exist = data[0];
+		if(exist) sendStuff();
+	});
 
         //initialize write stream to cloud
-        let out = bucket.file(cloudFilePath).createWriteStream({resumable: false});
+        let out = cloudFile.createWriteStream({resumable: false});
         //generate the art canvas and make a png stream from it
         let stream = generate(theSeed, theEngine).createPNGStream();
         //pipe png stream into cloud

@@ -28,7 +28,7 @@ module.exports = (canvas, seed) => {
     else ctx.lineWidth = 3;
 
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(Math.random());
+    ctx.rotate(Math.random() * Math.PI * 2);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     for(let i = 0; i < amt; i++){
