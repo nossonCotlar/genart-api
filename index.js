@@ -15,6 +15,7 @@ const gc = new Storage({keyFilename: 'genart-key.json', projectId: 'genart-29990
 const bucket = gc.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 const app = express();
+const port = process.env.PORT;
 
 app.use(cors());
 app.get('/', genart); //will use the default engine, with an optional seed passed as a param
@@ -25,6 +26,9 @@ async function genart(req, res){
     //determine if synchronous
     let sync = req.query.sync;
     let embed = req.query.embed;
+
+	res.setHeader('X-Powered-By', 'Cum');
+
     try{
         //find the seed
         let theSeed = req.query.seed || req.params.seed || randomstring.generate(10);
@@ -43,8 +47,19 @@ async function genart(req, res){
         //initialize write stream to cloud
         let out = cloudFile.createWriteStream({resumable: false});
         //generate the art canvas and make a png stream from it
-        let stream = generate(theSeed, theEngine).createPNGStream();
-        //pipe png stream into cloud
+        let stream;
+	
+	try{
+		stream = generate(theSeed, theEngine).createPNGStream();
+	
+	} catch(e){
+		console.error("whoops, something went wrong during generation");
+		res.status(500).json({ error: e});
+		return;
+	}
+	
+	    
+	//pipe png stream into cloud
         stream.pipe(out);
         
         //define what to do when sending response
@@ -72,4 +87,4 @@ async function genart(req, res){
     }
 }
 
-app.listen(process.env.PORT, () => console.log("We're gtg"));
+app.listen(port, () => console.log(`We're gtg on ${port} :)`));

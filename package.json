@@ -8,17 +8,18 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"There weren't any tests, so we'll exit now...\" && exit 0",
     "start": "node index.js"
   },
   "author": "Nosson Cotlar",
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^5.7.0",
-    "canvas": "^2.6.1",
+    "canvas": "^2.7.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jest": "^26.6.3",
     "randomstring": "^1.1.5",
     "seedrandom": "^3.0.5",
     "simplex-noise": "^2.4.0"

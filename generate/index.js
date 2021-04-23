@@ -11,8 +11,8 @@ function generate(seed, engine){
         generator = require(`../engines/${engine}.js`); //load correct generator engine
     }
     catch(e){
-        console.error(e);
-        throw `Having some issues generating with engine: ${engine}`;
+        console.error(`Having some trouble fetching the ${engine} engine`);
+        throw `Couldn't find the ${engine} engine`;
     }
     let canvas;
     try{
