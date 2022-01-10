@@ -4,6 +4,17 @@ WORKDIR /genart
 ENV PORT 6969
 
 COPY . .
+
+RUN apt update
+
+RUN apt install -y \
+build-essential \
+libcairo2-dev \
+libpango1.0-dev \
+libjpeg-dev \
+libgif-dev \
+librsvg2-dev
+
 RUN npm install
 
 CMD ["npm", "start"]

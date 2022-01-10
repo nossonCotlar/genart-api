@@ -11,7 +11,7 @@ const generate = require('./generate'); //returns a canvas generated from a seed
 const { urlencoded } = require('express');
 
 //Google Storage stuff
-const gc = new Storage({keyFilename: 'genart-key.json', projectId: 'genart-299908'});
+const gc = new Storage({keyFilename: process.env.GCLOUD_KEY_FILE_PATH, projectId: process.env.GCLOUD_PROJECT_NAME});
 const bucket = gc.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 const app = express();
