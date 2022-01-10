@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Overpass&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q5JY90XB9N"></script>
+    <script>
+	    window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments)};
+	gtag('js', new Date());
+	gtag('config', 'G-Q5JY90XB9N');
+    </script>
+
+    <title>Genart Web Interface</title>
+</head>
+<body>
+    <h1>Web interface for the <a href="https://github.com/nossonCotlar/genart-api">Genart API</a></h1>
+    
+    <div id="flexhold">
+        <div id="imgholder">
+            <img id="output" src="">
+        </div>
+        
+        <div id="form">
+            <label for="seed">Seed</label>
+            <input type="text" id="seed" name="seed" placeholder="(Leave empty for random)">
+            <br>
+            <label for="engine">Engine</label>
+            <select id="engine" name="engine">
+                <option value="">Default Engine</option>
+                <option value="alpha">Alpha</option>
+                <option value="beta">Beta</option>
+                <option value="gamma">Gamma</option>
+            </select>
+            <br>
+            <input type="submit" onclick="getGen()" value="GENERATE" id="submit">
+        </div>
+        
+    </div>
+    <br>
+    <pre id="result"></pre>
+    
+    
+</body>
+</html>
