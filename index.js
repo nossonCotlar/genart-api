@@ -36,13 +36,13 @@ async function genart(req, res){
 
         //determine cloud file path
         let cloudFilePath = `${theEngine}/${theSeed}.png`;
-	let cloudFile = bucket.file(cloudFilePath);
+	    let cloudFile = bucket.file(cloudFilePath);
 
-	let exist = false;
-	cloudFile.exists().then( (data) => {
-		exist = data[0];
-		if(exist) sendStuff();
-	});
+	    let exist = false;
+	    cloudFile.exists().then( (data) => {
+		    exist = data[0];
+		    if(exist) sendStuff();
+	    });
 
         //initialize write stream to cloud
         let out = cloudFile.createWriteStream({resumable: false});
