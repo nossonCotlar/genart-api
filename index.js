@@ -2,6 +2,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const subdomain = require('express-subdomain');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
@@ -16,8 +17,11 @@ const bucket = gc.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 const app = express();
 const port = process.env.PORT;
+const webapp_subdomain = process.env.WEBAPP_SUBDOMAIN;
 
+console.log(webapp_subdomain);
 app.use(cors());
+app.use(subdomain(webapp_subdomain, express.static('/webapp')));
 app.get('/', genart); //will use the default engine, with an optional seed passed as a param
 app.get('/:engine', genart);
 app.get('/:engine/:seed', genart);
