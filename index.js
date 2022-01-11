@@ -21,7 +21,7 @@ const webapp_subdomain = process.env.WEBAPP_SUBDOMAIN;
 
 console.log(webapp_subdomain);
 app.use(cors());
-app.use(subdomain(webapp_subdomain, express.static('/webapp')));
+app.use(subdomain(webapp_subdomain, express.static('webapp')));
 app.get('/', genart); //will use the default engine, with an optional seed passed as a param
 app.get('/:engine', genart);
 app.get('/:engine/:seed', genart);
