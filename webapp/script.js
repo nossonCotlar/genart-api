@@ -1,6 +1,7 @@
 function getGen(){
 	document.getElementById('result').innerHTML = '<b>Generating...</b>';
-    let url = new URL('https://genart.rood.systems');
+    let nonSubdomain = document.location.host.replace(/^[^.]+\./g, "");
+    let url = new URL(`${document.location.protocol}//${nonSubdomain}`);
     let params = {
         seed: document.getElementById('seed').value, 
         engine: document.getElementById('engine').value, 
