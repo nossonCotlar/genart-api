@@ -1,7 +1,6 @@
 FROM node:14.16-buster
 
 WORKDIR /genart
-ENV PORT 6969
 
 COPY . .
 
@@ -15,6 +14,7 @@ libjpeg-dev \
 libgif-dev \
 librsvg2-dev
 
+RUN npm install canvas --build-from-source
 RUN npm install
 
 CMD ["npm", "start"]
