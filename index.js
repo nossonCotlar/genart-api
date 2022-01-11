@@ -49,17 +49,17 @@ async function genart(req, res){
         //generate the art canvas and make a png stream from it
         let stream;
 	
-	try{
-		stream = generate(theSeed, theEngine).createPNGStream();
-	
-	} catch(e){
-		console.error("whoops, something went wrong during generation");
-		res.status(500).json({ error: e});
-		return;
-	}
+        try{
+            stream = generate(theSeed, theEngine).createPNGStream();
+        
+        } catch(e){
+            console.error("whoops, something went wrong during generation");
+            res.status(500).json({ error: e});
+            return;
+        }
 	
 	    
-	//pipe png stream into cloud
+	    //pipe png stream into cloud
         stream.pipe(out);
         
         //define what to do when sending response
